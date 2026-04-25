@@ -13,6 +13,7 @@ import { ImMobile2 } from "react-icons/im";
 import { IoMdClose } from "react-icons/io";
 import { GoogleGenAI } from "@google/genai";
 import { FadeLoader } from 'react-spinners';
+
 import { API_KEY } from './helper';
 
 
@@ -27,6 +28,7 @@ function App() {
    const [isShowCode, setIsShowCode] = useState(false);
    const [isInNewTab, setIsInNewTab] = useState(false);
    const [loading, setLoading] = useState(false);
+   const [device, setDevice] = useState("computer"); 
    const [code, setcode] = useState(
       `
       <!doctype html>
@@ -122,7 +124,11 @@ Website prompt: ${prompt}`
       setLoading(false);
       console.log(response.text);
    }
+    
 
+
+
+   
    return (
       <>
          <NavBar />
@@ -253,32 +259,58 @@ Website prompt: ${prompt}`
 
             isInNewTab ?
                <>
+      {/* Main Wrapper: 'mx-auto' center karne ke liye aur 'w-full' ko fix width se override karein */}
+<div className={`modelCon transition-all duration-500 mx-auto bg-white shadow-2xl overflow-hidden flex flex-col ${
+    device === 'mobile' ? 'w-[375px] h-[667px] border-[12px] border-black rounded-[40px] my-5' : 
+    device === 'tablet' ? 'w-[768px] h-[90vh] border-[10px] border-black rounded-[25px] my-5' : 
+    'w-full h-screen'
+}`} style={{ width: device === 'mobile' ? '375px' : device === 'tablet' ? '768px' : '100%' }}>
+    
+    <div className="modelBox h-full flex flex-col">
+        {/* Header - Isse 'w-full' hi rehne dein taaki icons sahi jagah rahein */}
+        <div className="header w-full px-[20px] md:px-[30px] h-[60px] flex items-center justify-between border-b bg-gray-50 shrink-0">
+            <h3 className='font-bold text-black'>Preview - {device.toUpperCase()}</h3>
 
-                  <div className="modelCon">
-                     <div className="modelBox">
-                        <div className="header w-full px-[50px] h-[70px] flex items-center justify-between">
-
-                           <h3 className='font-[700]'>Preview</h3>
-
-                           <div className="icons flex items-center gap-[15px]">
-
-                              <div className="icon"><RiComputerLine /></div>
-                              <div className="icon"><FaTabletAlt /></div>
-                              <div className="icon"><ImMobile2 /></div>
-                           </div>
-
-
-                        </div>
-                        <iframe srcDoc={code} className='w-full newTabIframe'></iframe>
-                     </div>
+            <div className="icons flex items-center gap-[10px]">
+                <div 
+                    className={`icon cursor-pointer p-2 rounded ${device === 'computer' ? 'bg-blue-600 text-white' : 'text-gray-500'}`}  
+                    onClick={() => setDevice('computer')}
+                >
+                    <RiComputerLine size={20} />
+                </div>
+                <div 
+                    className={`icon cursor-pointer p-2 rounded ${device === 'tablet' ? 'bg-blue-600 text-white' : 'text-gray-500'}`}  
+                    onClick={() => setDevice('tablet')}
+                >
+                    <FaTabletAlt size={18} />
+                </div>
+                <div 
+                    className={`icon cursor-pointer p-2 rounded ${device === 'mobile' ? 'bg-blue-600 text-white' : 'text-gray-500'}`}  
+                    onClick={() => setDevice('mobile')}
+                >
+                    <ImMobile2 size={16} />
+                </div>
+            </div>
+              <div className="icons">
+                    <div className="icon" onClick={() => { setIsInNewTab(false) }}><IoMdClose /></div>
                   </div>
+        </div>
 
-               </> :
-               <>
+        {/* Iframe: Iski width parent (768px) ke hisaab se auto adjust hogi */}
+        <iframe 
+            srcDoc={code} 
+            className='w-full flex-1 bg-white border-none' 
+            title="preview"
+        ></iframe>
+    </div>
+</div>
 
 
-               </>
+</>
 
+
+ :
+               " "
 
 
          }

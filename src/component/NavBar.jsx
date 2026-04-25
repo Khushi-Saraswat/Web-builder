@@ -2,11 +2,22 @@
 
 import { IoMdMoon } from "react-icons/io"; 
 import { FaUser } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { FaRegMoon } from "react-icons/fa6";
 
 const NavBar = () =>{
     
     const[mode,setMode]=useState("false");
+
+    useEffect(() => {
+     if (mode) {
+    document.body.style.backgroundColor = "#1a1a1a"; // Dark color
+    document.body.style.color = "#ffffff";           // Text color
+     } else {
+    document.body.style.backgroundColor = "#ffffff"; // Light color
+    document.body.style.color = "#000000";
+     }
+     }, [mode]);
     
     return(
          <div className="nav flex item-center justify-between px-[120px] h-[70px]">
@@ -18,8 +29,15 @@ const NavBar = () =>{
             </div>
 
             <div className="icons flex items-center gap-[15px]">
-                    <i className='icon'>
-                     <IoMdMoon/></i>
+
+                    <div onClick={(e) => { setMode(!mode) }}>
+                  
+                      
+                      <i className='icon'>
+                         {mode ? <IoMdMoon /> : <FaRegMoon />}
+                      </i>
+                   
+                     </div>
 
                      <i className='icon'>
                      <FaUser/></i>

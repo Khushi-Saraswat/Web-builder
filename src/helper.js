@@ -1,3 +1,7 @@
 
 
-export  const API_KEY = "AIzaSyAvsdIQH73yz0pdE445P18nRIGLdfxxK5Q"
+
+// helper.js mein key ko aise access karein
+export const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
+
+// Ab is 'apiKey' variable ko apne function mein use karein
