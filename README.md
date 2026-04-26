@@ -12,6 +12,8 @@ AI-powered website generator. Describe your website and get instant UI with live
 * Download code
 * Show generated code
 * Built with React + Tailwind
+* Toggle on-off functionality
+* Responsive design
 
 ---
 
